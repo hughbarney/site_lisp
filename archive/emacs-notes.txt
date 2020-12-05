@@ -1,0 +1,157 @@
+UBUNTU todo  29-Dec-2011
+========================
+get alt keys working properly
+
+https://wiki.ubuntu.com/LaptopTesting/Keycodes
+
+64 Alt_L
+9 Esc
+92 Alt-R
+37 Control_L
+105 Control_R
+
+http://www.xfree86.org/4.2.0/xmodmap.1.html
+
+
+Emacs Windows XP/NT Todo List
+=============================
+      o Turn off CVS modes or integrate  DONE
+      o Turn off backups when file is in CVS DONE
+      o Make Ediff work
+  o Emacs pre-compiled for AIX v ?
+  o make print file work
+  
+
+Binding an anonymous functon to a key
+=====================================
+(global-set-key [f2] (lambda ()(interactive) (message "hi")))
+
+
+Ediff On Windows
+================
+(setq ediff-diff-options '"")
+
+ediff-revision   # full ediff on current file 
+vc-diff          # does context diffs
+
+
+Bookmarks
+=========
+   C-X r m  add to bookmark list
+   C-X r l  edit bookmark buffer
+
+
+Narrowing
+=========
+   C-X n n  ;; narrow to region
+   C-X n w  ;; widen narrowed region
+
+ 
+To save a keyboard macro recording to elsip
+===========================================
+ . Record macro C-X ( ... C-X )
+ . name macro: 
+      M-x execute name-last-kbd-macro
+ . insert it into scratch: 
+      M-x insert-kbd-macro
+ . save it to a file for later use
+ 
+
+Printing
+========
+;;
+;; Getting Printing to work on MS-Windows
+;; Installation and setup of ghostscript
+;; download gs851w32.exe and gsv47w32.exe from
+;; http://www.ghostscript.com/, install both in 
+;; c:\bin\ghostscript
+;;
+(setenv "GS_LIB" "c:\\bin\\ghostscript\\fonts;c:\\bin\\ghostscript\\gs8.51\\lib")
+(setq ps-lpr-command "c:/bin/ghostscript/gs8.51/bin/gswin32c.exe")
+(setq ps-lpr-switches '("-q" "-dNOPAUSE" "-dBATCH" "-sDEVICE=mswinpr2"))
+(setq ps-printer-name t)
+
+
+Repeating the last command
+==========================
+Do command (keystroke or M-x cmd-name)
+C-X z
+Then just hit z for subsequent repeats
+
+
+Syntax of Regular Expressions
+=============================
+ o special chars (operators) $ ^ . * + ? [ ] \
+ o All chars are ordinary unless escaped by \
+ o When using in lisp each \ must be doubled
+
+ `*?, +?, ??' are non-greedy variants of the operators above.
+   The normal operators `*', `+', `?' match as much as they can
+   with ? they will match as little as possible.
+
+ `\{N\}' postfix op that specifies repetition N times
+     `x\{4\}' matches the string `xxxx' and nothing
+
+ `\{N,M\}' postfix op specifies repetition between N and M
+     `\{0,1\}' is equivalent to `?'.
+     `\{0,\}' is equivalent to `*'.
+     `\{1,\}' is equivalent to `+'.
+
+ `[ ... ]' is a "character set",
+     `[ad]' matches either one `a' or one `d'
+     `[ad]*' matches any string composed of just `a's and `d's
+     `[a-z]' matches any lower-case ASCII letter
+     `[a-z$%.]', which matches any lower-case ASCII letter or `$', `%' or period.
+     `[]a]' matches `]' or `a'.
+     `[]-]' matches both `]' and `-'.
+
+     NOTE special characters are not special inside a character set.
+
+ `[^ ... ]' begins a "complemented character set"
+
+   `*foo' treats `*' as ordinary since there is nothing on which the `*' can act.
+
+() Groups
+   In emacs the usual AWK regexp group contruct operators are quoted using \
+   IE: () (reg1|reg2) Are done using \( \) and \|
+       foo\|bar' matches either `foo' or `bar'
+       `ba\(na\)*' matches `bananana', etc.
+
+   NOTE: Emacs has a whole load of word end regexps (see info regexp)
+
+EXAMPLE: Lisp syntax for `sentence-end'
+
+     "[.?!][]\"')]*\\($\\| $\\|\t\\|  \\)[ \t\n]*"
+
+  This contains four parts in succession: a character set matching period,
+  `?', or `!'; a character set matching close-brackets, quotes, or
+  parentheses, repeated zero or more times; a set of alternatives within
+  backslash-parentheses that matches either end-of-line, a space at the end
+  of a line, a tab, or two spaces; and a character set matching whitespace
+  characters, repeated any number of times.
+
+
+Regexp to find import statement:
+================================
+/*
+ * @(#)com.xxx.xxx.xxx.xxx.java
+ */
+
+^[ \t]+\*[ \t]+@(#)com
+   Matches the first style.
+   Note: we dont quote the (). They get quoted when we want to use regexps groups
+
+But there are 2 other styles
+
+/*
+ * com.dto.AuditDTOSessionFacadeLocal.java
+ *
+ */
+
+/*
+ * (#)com.dto.AuditDTOSessionFacade.java
+ */
+
+This one matches all three possibilities
+
+^[ \t]+\*[ \t]+@?\((#)\)?com
