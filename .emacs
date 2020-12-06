@@ -1,6 +1,6 @@
 ;;
 ;; Unified .emacs for different OS
-;; Time-stamp: <2020-12-06 19:03:26 hugh>
+;; Time-stamp: <2020-12-06 19:12:02 hugh>
 ;;
 ;; -*-lisp-*-
 ;; -*-lisp-interaction-mode-*-
@@ -277,6 +277,13 @@
     (define-key my-map-f12 "t" 'my-toggle-tabstops)        ; F12-t
     (define-key my-map-f12 "i" 'my-insert-import-stmt)     ; F12-i
     ))
+
+;; magit
+
+(if t
+  (progn
+    (require 'magit)
+    (global-set-key (kbd "M-m") 'magit-status)))
 
 
 (defun my-find-file-hook()
@@ -627,8 +634,7 @@ replacements are only done on that region"
 ;;(eval-after-load 'info
 ;;  '(progn (info-initialize)
 ;;          (add-to-list 'Info-directory-list "/home/hugh/Gits/magit/")))
-;;(require 'magit)
-;;(global-set-key (kbd "M-m") 'magit-status)
+
 
 ;;
 ;;  org-mode setup
@@ -697,3 +703,15 @@ replacements are only done on that region"
 (load-theme 'my-solarized)
 ;;(load-theme 'my-basic)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(magit)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
