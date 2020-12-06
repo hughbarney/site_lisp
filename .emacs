@@ -1,6 +1,6 @@
 ;;
 ;; Unified .emacs for different OS
-;; Time-stamp: <2020-10-03 00:14:04 hughbarney>
+;; Time-stamp: <2020-12-06 19:03:26 hugh>
 ;;
 ;; -*-lisp-*-
 ;; -*-lisp-interaction-mode-*-
@@ -12,6 +12,7 @@
 ;;
 
 (setq inhibit-default-init t)              ; override system .emacs
+;(setq debug-on-error t)
 
 ;; does not appear to work on a chromebook
 ;(setq initial-frame-alist '((top . 1) (left . 1) (width . 115) (height . 35)))
@@ -65,9 +66,8 @@
     (scroll-bar-mode -1) ;; turn off scroll bars
     (menu-bar-mode -1)
     (global-set-key [delete] `delete-char)
-    (set-default-font "Monospace 12")
+    ;(set-default-font "Monospace 12")
     ))
-
 
 ;;
 ;; 
@@ -94,12 +94,12 @@
 ;; Attempt to set start up size on a windowing system
 ;;
 
-(if nil
+(if t
   (progn
     (set-frame-height (selected-frame) 45)
-    (set-frame-width (selected-frame) 115)
-    (set-frame-size (selected-frame) 115 35)
-    (set-frame-position (selected-frame) 1 0)))
+    (set-frame-width (selected-frame) 120)
+    (set-frame-size (selected-frame) 120 45)
+    (set-frame-position (selected-frame) 400 80)))
 
 ;;
 ;; useful function to extend auto-mode-alist
