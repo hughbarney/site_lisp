@@ -1,6 +1,6 @@
 ;;
 ;; Unified .emacs for different OS
-;; Time-stamp: <2020-12-06 19:12:02 hugh>
+;; Time-stamp: <2022-09-19 18:37:32 hugh>
 ;;
 ;; -*-lisp-*-
 ;; -*-lisp-interaction-mode-*-
@@ -62,11 +62,12 @@
 (if t
   (progn
     (tool-bar-mode 0)      ;; turn off tool bar (Graphics can be slow over VPN etc)
-    (tooltip-mode nil)   ;; turn off those tooltip on mouse etc, they pop up when iconised
-    (scroll-bar-mode -1) ;; turn off scroll bars
+    (tooltip-mode nil)     ;; turn off those tooltip on mouse etc, they pop up when iconised
+    (scroll-bar-mode -1)   ;; turn off scroll bars
     (menu-bar-mode -1)
     (global-set-key [delete] `delete-char)
-    ;(set-default-font "Monospace 12")
+    ;; (set-default-font "Monospace 12")
+    (set-face-attribute 'default (selected-frame) :height 118)
     ))
 
 ;;
@@ -87,7 +88,9 @@
    (setq grep-command "findstr /s /n /i ")
    (setq compile-command "build")
    (setq ediff-diff-options '"")
-   (set-default-font "Monospace 12")))
+   ;; (set-default-font "Monospace 12")
+   (set-face-attribute 'default (selected-frame) :height 118)
+   ))
 
 
 ;;
@@ -280,7 +283,7 @@
 
 ;; magit
 
-(if t
+(if nil
   (progn
     (require 'magit)
     (global-set-key (kbd "M-m") 'magit-status)))
