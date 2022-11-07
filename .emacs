@@ -1,6 +1,6 @@
 ;;
 ;; Unified .emacs for different OS
-;; Time-stamp: <2022-09-19 18:37:32 hugh>
+;; Time-stamp: <2022-11-07 22:41:18 hugh>
 ;;
 ;; -*-lisp-*-
 ;; -*-lisp-interaction-mode-*-
@@ -287,6 +287,15 @@
   (progn
     (require 'magit)
     (global-set-key (kbd "M-m") 'magit-status)))
+
+;; javascript mode
+
+(if t
+  (progn
+    (require 'js2-mode)
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+    (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
+    ))
 
 
 (defun my-find-file-hook()
@@ -711,7 +720,7 @@ replacements are only done on that region"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(magit)))
+ '(package-selected-packages '(js2-mode impatient-mode magit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
