@@ -1,10 +1,12 @@
 ;;
 ;; Unified .emacs for different OS
-;; Time-stamp: <2022-11-07 22:41:18 hugh>
 ;;
 ;; -*-lisp-*-
 ;; -*-lisp-interaction-mode-*-
 ;;
+;; HISTORY
+;; 04/01/2025 HB updated customize-cc-mode
+
 
 
 ;;
@@ -14,13 +16,10 @@
 (setq inhibit-default-init t)              ; override system .emacs
 ;(setq debug-on-error t)
 
-;; does not appear to work on a chromebook
-;(setq initial-frame-alist '((top . 1) (left . 1) (width . 115) (height . 35)))
-
 (setq inhibit-startup-screen t)            ; dont show the Emacs Window
 (setq-default auto-save-default nil)       ; no auto save
 (setq-default make-backup-files nil)       ; no backup files
-(setq-default scroll-step 1)               ; trun off jumpy scroll
+(setq-default scroll-step 1)               ; turn off jumpy scroll
 (setq-default visible-bell t)              ; no beeps, flash on errors
 (transient-mark-mode -1)                   ; no highlight of marked region by default
 (show-paren-mode 1)                        ; show matching parenthesis
@@ -48,13 +47,27 @@
 (put 'eval-expression 'disabled nil)       ; enable ESC-: eval-expression 
 (setq font-lock-maximum-decoration t)      ; use colours in font lock mode
 (setq font-lock-maximum-size nil)          ; trun off limit on font lock mode
-(add-hook 'find-file-hooks 'my-find-file-hook)  ; setup when a file is loaded
+;;(add-hook 'find-file-hooks 'my-find-file-hook)  ; setup when a file is loaded
 (add-hook 'c-mode-hook 'customize-cc-mode) ; cc-mode setup
 (add-hook 'java-mode-hook 'customize-java-mode) ; java-mode setup
 (add-hook 'write-file-hooks 'time-stamp)
 (setq message-log-max nil)
 (condition-case nil (kill-buffer "*Messages*") (error nil) ) ; no messages buffer
 
+;;
+;;
+;;
+
+(defun my-find-file-hook()
+ "hgb hooks for when file is loaded"
+ (interactive)
+ ;; truncate lines for each file openned. We don't do
+ ;; this using setq-default as it also effects the minibuffer and I want
+ ;; to use resize-minibuffer-mode"
+ (setq truncate-lines 1)
+ (turn-on-font-lock)       ;; not needed for xemacs
+;; (transient-mark-mode -1)  ;; no highlight of marked region by default
+)
 
 ;;
 ;; GNU/LINUX specifics
@@ -202,7 +215,8 @@
     (global-set-key [(alt i)] `clipboard-yank)             ; C-y
     (global-set-key [(alt k)] `kill-line)                  ; C-k
     (global-set-key [(alt l)] `logify)                     ; (logify, kbd macro)
-    (global-set-key [(alt m)] `my-set-mark-command)        ;
+    ;;    (global-set-key [(alt m)] `my-set-mark-command)  ;
+    (global-set-key [(alt m)] `set-mark-command)           ;
     (global-set-key [(alt n)] `my-cycle-buffers)
     (global-set-key [(alt o)] `delete-other-windows)       ; C-x 1
     (global-set-key [(alt p)] `next-error)                 ; C-x `
@@ -290,24 +304,13 @@
 
 ;; javascript mode
 
-(if t
+(if nil
   (progn
     (require 'js2-mode)
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
     (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
     ))
 
-
-(defun my-find-file-hook()
- "hgb hooks for when file is loaded"
- (interactive)
- ;; truncate lines for each file openned. We don't do
- ;; this using setq-default as it also effects the minibuffer and I want
- ;; to use resize-minibuffer-mode"
- (setq truncate-lines 1)
- (turn-on-font-lock)       ;; not needed for xemacs
-;; (transient-mark-mode -1)  ;; no highlight of marked region by default
-)
 
 ;;
 ;; does not report status properly, dont know how to read
@@ -340,22 +343,21 @@
 )
 
 
-;; setup cc-mode
-(defun customize-cc-mode()	      
-  (setq c-default-style "linux")
-  (c-set-offset 'substatement-open 0)
-  (setq c-basic-offset 8)
-  (setq c-indent-level 8)
-  (setq comment-column 40)
-;;  (setq c-auto-newline t)    ; auto newlines after {}:;  toggle C-C C-T
-  (setq indent-tabs-mode t)
+;; setup cc-mode, k&r style with 4 spaces for indentation
+(defun customize-cc-mode ()
+  (local-set-key "\C-h" 'backward-delete-char)
+  (setq c-default-style "k&r")
+  ;; this will make sure spaces are used instead of tabs
+  (setq tab-width 4 indent-tabs-mode nil)
+  (setq indent-tabs-mode 'nil)
+  (setq c-basic-offset 4)
   (define-key c-mode-map "\C-m" 'newline-and-indent)
-;; c-tab-always-indent
-;; Any other value (not `nil' or `t') means always reindent the line
-;; and also insert a tab if within a comment, a string, or a
-;; preprocessor directive.
-;;  (setq c-tab-always-indent nil)
+  (c-set-offset 'substatement-open 0)
+  (c-set-offset 'statement-case-open 0)
+  (c-set-offset 'case-label 0)
+  (c-set-offset 'brace-list-open 0)
 )
+
 
 (defun customize-java-mode()	      
   (setq c-basic-offset 4)
