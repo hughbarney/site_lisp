@@ -13,6 +13,9 @@
 ;; General Settings
 ;;
 
+(setq x-alt-keysym `alt)                   ; Use alt keys, no need to use .Xmodmap
+                                           ; worked on kernal 6.0.33 but not 6.0.48
+
 (setq inhibit-default-init t)              ; override system .emacs
 ;(setq debug-on-error t)
 
@@ -197,6 +200,39 @@
 (global-set-key (kbd "C-x c") 'my-edit-dot-emacs)         ; C-x c
 
 ;;
+;; Setup MacOS command key as an Alt key
+;; may need to disable these keys on some linux window managers
+;;
+(if t
+  (progn
+    (global-set-key (kbd "s-a") `my-duplicate-line)
+    (global-set-key (kbd "s-b") `buffer-menu)
+    (global-set-key (kbd "s-c") `clipboard-kill-ring-save)   ; same s copy from menu bar
+    (global-set-key (kbd "s-d") `my-delete-line) 
+    (global-set-key (kbd "s-e") `call-last-kbd-macro)        ; C-x e
+    (global-set-key (kbd "s-f") `find-file)                  ; C-x C-f
+    (global-set-key (kbd "s-g") `goto-line)
+    (global-set-key (kbd "s-i") `clipboard-yank)             ; C-y
+    (global-set-key (kbd "s-k") `kill-line)                  ; C-k
+    (global-set-key (kbd "s-m") `set-mark-command)           ; C-space
+    (global-set-key (kbd "s-n") `my-cycle-buffers)
+    (global-set-key (kbd "s-o") `delete-other-windows)       ; C-x 1
+    (global-set-key (kbd "s-p") `next-error)                 ; C-x `
+    (global-set-key (kbd "s-q") `my-kill-current-buffer)     ; C-x k RET
+    (global-set-key (kbd "s-r") `insert-file)                ; C-x i 
+    (global-set-key (kbd "s-s") `split-window-vertically)    ; C-x 2 
+    (global-set-key (kbd "s-t") `query-replace)              ; ESC-%
+    (global-set-key (kbd "s-u") `advertised-undo)            ; C-x u
+    (global-set-key (kbd "s-v") `find-file-read-only)        ; C-x 4 r
+    (global-set-key (kbd "s-w") `save-buffer)                ; C-x C-S
+    (global-set-key (kbd "s-y") `yank)                       ; C-y
+    (global-set-key (kbd "s-z") `iconify-or-deiconify-frame) ; C-z
+    ;(global-set-key (kbd "s-\;") `comment-line)              ; C-x C-;
+    )
+  )
+
+
+;;
 ;; Setup Alt Keys
 ;;
 (if t
@@ -214,8 +250,6 @@
     (global-set-key [(alt g)] `goto-line)
     (global-set-key [(alt i)] `clipboard-yank)             ; C-y
     (global-set-key [(alt k)] `kill-line)                  ; C-k
-    (global-set-key [(alt l)] `logify)                     ; (logify, kbd macro)
-    ;;    (global-set-key [(alt m)] `my-set-mark-command)  ;
     (global-set-key [(alt m)] `set-mark-command)           ;
     (global-set-key [(alt n)] `my-cycle-buffers)
     (global-set-key [(alt o)] `delete-other-windows)       ; C-x 1
