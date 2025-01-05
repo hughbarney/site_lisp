@@ -4,9 +4,6 @@
 ;; -*-lisp-*-
 ;; -*-lisp-interaction-mode-*-
 ;;
-;; HISTORY
-;; 04/01/2025 HB updated customize-cc-mode
-
 
 
 ;;
@@ -14,7 +11,6 @@
 ;;
 
 (setq x-alt-keysym `alt)                   ; Use alt keys, no need to use .Xmodmap
-                                           ; worked on kernal 6.0.33 but not 6.0.48
 
 (setq inhibit-default-init t)              ; override system .emacs
 ;(setq debug-on-error t)
@@ -203,7 +199,7 @@
 ;; Setup MacOS command key as an Alt key
 ;; may need to disable these keys on some linux window managers
 ;;
-(if t
+(if nil
   (progn
     (global-set-key (kbd "s-a") `my-duplicate-line)
     (global-set-key (kbd "s-b") `buffer-menu)
@@ -235,7 +231,7 @@
 ;;
 ;; Setup Alt Keys
 ;;
-(if t
+(if nil
   (progn
     (global-set-key [(alt home)] `beginning-of-buffer)
     (global-set-key [(alt end)] `end-of-buffer)
@@ -277,8 +273,9 @@
 
 ;;
 ;; Using Esc instead of Alt keys
+;; used with (setq x-alt-keysym `alt) and alt key work as esc
 ;;
-(if nil
+(if t
   (progn
     (global-set-key (kbd "M-a") `my-duplicate-line)
     (global-set-key (kbd "M-b") `buffer-menu)
@@ -288,7 +285,7 @@
     (global-set-key (kbd "M-g") `goto-line)                  ; 
     (global-set-key (kbd "M-i") `clipboard-yank)             ; C-y
     (global-set-key (kbd "M-k") `kill-line)                  ; C-k
-    (global-set-key (kbd "M-m") `my-set-mark-command)        ;
+    (global-set-key (kbd "M-m") `set-mark-command)           ;
     (global-set-key (kbd "M-n") `my-cycle-buffers)
     (global-set-key (kbd "M-o") `delete-other-windows)       ; C-x 1
     (global-set-key (kbd "M-s") `split-window-vertically)    ; C-x 2
