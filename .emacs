@@ -292,6 +292,12 @@
     (global-set-key (kbd "M-t") `query-replace)
     (global-set-key (kbd "M-q") `my-kill-current-buffer)     ; C-x k RET
     (global-set-key (kbd "M-w") `save-buffer)                ; C-x C-S
+
+    (global-set-key [M-down] `scroll-up-command)
+    (global-set-key [M-up] `scroll-down-command)
+    (global-set-key [M-home] `beginning-of-buffer)
+    (global-set-key [M-end] `end-of-buffer)
+    
     ))
 
 
