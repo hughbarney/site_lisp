@@ -22,7 +22,6 @@
 (setq-default visible-bell t)              ; no beeps, flash on errors
 (transient-mark-mode -1)                   ; no highlight of marked region by default
 (show-paren-mode 1)                        ; show matching parenthesis
-(setq load-path (cons (expand-file-name "~/site_lisp") load-path))  ;; look in own library first
 
 (display-time)                             ; display the time on modeline
 (column-number-mode t)                     ; display the column number on modeline
@@ -111,10 +110,10 @@
 
 (if t
   (progn
-    (set-frame-height (selected-frame) 45)
+    (set-frame-height (selected-frame) 44)
     (set-frame-width (selected-frame) 120)
-    (set-frame-size (selected-frame) 120 45)
-    (set-frame-position (selected-frame) 400 80)))
+    (set-frame-size (selected-frame) 120 44)
+    (set-frame-position (selected-frame) 100 80)))
 
 ;;
 ;; useful function to extend auto-mode-alist
@@ -136,13 +135,11 @@
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic Mode." t)
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 (setq html-helper-do-write-file-hooks t)
 
 ;;
 ;; File/Mode Bindings
 ;;
-(auto-mode "\\.lua$" 'lua-mode)
 (auto-mode "\\.html$" 'html-helper-mode)
 (auto-mode "\\.jsp$" 'html-mode)
 (auto-mode "\\.py$" 'python-mode)
@@ -157,11 +154,31 @@
 (auto-mode "\\.el$" 'lisp-interaction-mode)
 
 ;;
+;; use site_lisp directory, where we hold custom themes and modes
+;;
+
+(if t
+  (progn
+    (setq load-path (cons (expand-file-name "~/site_lisp") load-path))  ;; look in own library first
+    (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+    (auto-mode "\\.lua$" 'lua-mode)
+    (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+    (load "lua_mode")   
+    ;;
+    ;; load my custom theme
+    ;;
+    ;; use M-x customize-create-theme to create a theme
+    ;; by default when you save it will be stored in ~/.emacs.d
+    (setq custom-safe-themes t)                   ;; I will trust custom themes
+    (setq custom-theme-directory "~/site_lisp/")  ;; I want my customer themes in here
+    (load-theme 'my-solarized)
+    ))
+
+;;
 ;; Auto Mode based on #!/bin/xxx
 ;;
 
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
-(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
 ;;
 ;; load in CUA mode
@@ -679,7 +696,6 @@ replacements are only done on that region"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "lua_mode")
 
 ;;(add-to-list 'load-path "/home/hugh/Gits/magit")
 ;;(eval-after-load 'info
@@ -742,17 +758,6 @@ replacements are only done on that region"
 ;;(package-refresh-contents)
 
 
-;;
-;; load my custom theme
-;;
-;; use M-x customize-create-theme to create a theme
-;; by default when you save it will be stored in ~/.emacs.d
-
-(setq custom-safe-themes t)                   ;; I will trust custom themes
-(setq custom-theme-directory "~/site_lisp/")  ;; I want my customer themes in here
-;;(load-theme 'myflatline)
-(load-theme 'my-solarized)
-;;(load-theme 'my-basic)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -760,9 +765,11 @@ replacements are only done on that region"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages '(js2-mode impatient-mode magit)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+
+;; 
+;; uncomment if you want green comments
+;;
+
+;;(custom-set-faces
+;;  '(font-lock-comment-face ((t (:foreground "green4")))))
